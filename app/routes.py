@@ -4,7 +4,7 @@ from app.utils.pdf_utils import download_pdf
 
 invoice_routes = Blueprint('invoice_routes', __name__)
 
-@invoice_routes.route('/invoice-reconciliation/<path:invoiceid>', methods=['POST'])
+@invoice_routes.route('/<path:invoiceid>', methods=['POST'])
 def parse_invoice(invoiceid: str):
     invoice_url = request.json.get('downloadUrl')
 
