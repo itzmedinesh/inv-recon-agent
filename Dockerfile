@@ -11,7 +11,7 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 
 # Upgrade install special libs
-RUN pip install scipy
+RUN pip install urllib3
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
