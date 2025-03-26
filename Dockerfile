@@ -10,6 +10,9 @@ COPY requirements.txt requirements.txt
 # Upgrade pip
 RUN pip install --upgrade pip
 
+# Upgrade install special libs
+RUN pip install networkx
+
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
