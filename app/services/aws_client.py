@@ -1,17 +1,29 @@
 import os
 import boto3
+import botocore.session
 from flask import Flask, json, request, jsonify, render_template
 from config import config
 
 from botocore.exceptions import NoCredentialsError, EndpointConnectionError, ClientError, ParamValidationError
 
 def get_bedrock_client():
-    return boto3.client(
-        'bedrock-runtime',
-        aws_access_key_id=config.AWS_ACCESS_KEY,
-        aws_secret_access_key=config.AWS_SECRET_KEY,
-        aws_session_token=config.AWS_SESSION_TOKEN,
-        region_name=config.AWS_REGION
+    
+    session = boto3.Session()
+    sts_client = session.client("sts")
+
+    assumed_role = sts_client.assume_role(
+        RoleArn="arn:aws:iam::730335296638:role/microcrafts.sandbox",
+        RoleSessionName="InvReconSession"
+    )
+    
+    assumed_session = boto3.Session(
+        aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],
+        aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
+        aws_session_token=assumed_role["Credentials"]["SessionToken"]
+    )
+    
+    return assumed_session.client(
+        'bedrock-runtime'
     )
 
 def get_bedrock_response(context, question):
