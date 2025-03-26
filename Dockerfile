@@ -11,7 +11,7 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 
 # Upgrade install special libs
-RUN pip install networkx
+RUN pip install numpy
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
