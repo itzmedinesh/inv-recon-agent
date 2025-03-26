@@ -11,7 +11,7 @@ COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 
 # Upgrade install special libs
-RUN pip install numpy
+RUN pip install scipy
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
