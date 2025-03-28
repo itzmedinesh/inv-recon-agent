@@ -8,7 +8,8 @@ from botocore.exceptions import NoCredentialsError, EndpointConnectionError, Cli
 
 def get_bedrock_client():
     
-    session = boto3.Session(region_name=os.environ['AWS_REGION'])
+    region = os.getenv('AWS_REGION', 'us-east-1')
+    session = boto3.Session(region_name=region)
     sts_client = session.client("sts")
 
     assumed_role = sts_client.assume_role(
@@ -19,11 +20,13 @@ def get_bedrock_client():
     assumed_session = boto3.Session(
         aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],
         aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
-        aws_session_token=assumed_role["Credentials"]["SessionToken"]
+        aws_session_token=assumed_role["Credentials"]["SessionToken"],
+        region_name=region
     )
     
     return assumed_session.client(
-        'bedrock-runtime'
+        'bedrock-runtime',
+        region_name=os.environ['AWS_REGION']
     )
 
 def get_bedrock_response(context, question):
