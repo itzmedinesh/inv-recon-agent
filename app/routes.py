@@ -4,8 +4,8 @@ from app.utils.pdf_utils import download_pdf
 
 invoice_routes = Blueprint('invoice_routes', __name__)
 
-@invoice_routes.route('/<path:invoiceid>', methods=['POST'])
-def parse_invoice(invoiceid: str):
+@invoice_routes.route('/', methods=['POST'])
+def parse_invoice():
     invoice_url = request.json.get('downloadUrl')
 
     if not invoice_url:
