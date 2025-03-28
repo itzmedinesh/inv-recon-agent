@@ -19,8 +19,7 @@ def get_bedrock_client():
     assumed_session = boto3.Session(
         aws_access_key_id=assumed_role["Credentials"]["AccessKeyId"],
         aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
-        aws_session_token=assumed_role["Credentials"]["SessionToken"],
-        aws_region_name="us-east-1"
+        aws_session_token=assumed_role["Credentials"]["SessionToken"]
     )
     
     return assumed_session.client(
