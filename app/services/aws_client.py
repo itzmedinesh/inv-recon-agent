@@ -8,8 +8,8 @@ from botocore.exceptions import NoCredentialsError, EndpointConnectionError, Cli
 
 def get_bedrock_client():
     
-    session = boto3.Session()
-    sts_client = session.client("sts", region_name="us-east-1")
+    session = boto3.Session(region_name=os.environ['AWS_REGION'])
+    sts_client = session.client("sts")
 
     assumed_role = sts_client.assume_role(
         RoleArn="arn:aws:iam::730335296638:role/microcrafts.sandbox",
